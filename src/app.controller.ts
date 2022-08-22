@@ -2,6 +2,8 @@ import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
+import { Role } from './users/entities/role.enum';
+import { Roles } from './users/roles.decorator';
 
 @Controller()
 export class AppController {
@@ -17,5 +19,12 @@ export class AppController {
   @Get('protected')
   getHello(@Request() req): string {
     return req.user;
+  }
+
+  @Get('roles')
+  @Roles(Role.ADMIN)
+  getRoles(@Request() req): string {
+    //return req.user;
+    return 'OK';
   }
 }
